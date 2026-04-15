@@ -62,6 +62,16 @@ git clone <repository_url>
 cd "Crop Yield Prediction"
 ```
 
+
+### Download the Dataset
+
+The required dataset for training and predictions is hosted externally due to its size. Please download it using the link below:
+
+[Download Dataset (Google Drive)](https://drive.google.com/file/d/1RKNH8i_WDeJ7rFKuCgdTJsfwkqN0Z8ZJ/view?usp=sharing)
+
+Once downloaded, extract the files and place them in the `dataset/` directory.
+
+
 ### 2. Create a Virtual Environment (Recommended)
 
 ```bash
