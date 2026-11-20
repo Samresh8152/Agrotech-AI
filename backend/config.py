@@ -26,5 +26,9 @@ class Config:
     # OpenWeatherMap
     OPENWEATHER_API_KEY = os.getenv('OPENWEATHER_API_KEY')
 
+    # Gemini (plant disease diagnosis for any plant)
+    GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+    GEMINI_MODEL = os.getenv('GEMINI_MODEL', 'gemini-3.5-flash')
+
     # CORS
     FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://localhost:5173')

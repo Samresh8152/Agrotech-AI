@@ -1,0 +1,60 @@
+{
+  "classes": [
+    "Apple___Black_rot",
+    "Apple___Cedar_apple_rust",
+    "Apple___healthy",
+    "Apple___scab",
+    "Cherry___Powdery_mildew",
+    "Cherry___healthy",
+    "Corn___Cercospora_leaf_spot_Gray_leaf_spot",
+    "Corn___Common_rust",
+    "Corn___Northern_Leaf_Blight",
+    "Corn___healthy",
+    "Grape___Black_rot",
+    "Grape___Esca",
+    "Grape___Leaf_blight",
+    "Grape___healthy",
+    "Peach___Bacterial_spot",
+    "Peach___healthy",
+    "Pepper_bell___Bacterial_spot",
+    "Pepper_bell___healthy",
+    "Potato___Early_blight",
+    "Potato___Late_blight",
+    "Potato___healthy",
+    "Strawberry___Leaf_scorch",
+    "Strawberry___healthy",
+    "Tomato___Bacterial_spot",
+    "Tomato___Early_blight",
+    "Tomato___Late_blight",
+    "Tomato___Leaf_Mold",
+    "Tomato___Septoria_leaf_spot",
+    "Tomato___Spider_mites",
+    "Tomato___Target_Spot",
+    "Tomato___Yellow_Leaf_Curl_Virus",
+    "Tomato___healthy",
+    "Tomato___mosaic_virus"
+  ],
+  "plants": [
+    "Apple",
+    "Cherry",
+    "Corn",
+    "Grape",
+    "Peach",
+    "Pepper_bell",
+    "Potato",
+    "Strawberry",
+    "Tomato"
+  ],
+  "img_size": 224,
+  "scale": 1.0,
+  "val_accuracy": 0.9137,
+  "train_dirs": [
+    "data/combined/train/plantvillage",
+    "data/combined/train/plantdoc"
+  ],
+  "val_dirs": [
+    "data/combined/val/plantvillage",
+    "data/combined/val/plantdoc"
+  ],
+  "train_images": 17806
+}

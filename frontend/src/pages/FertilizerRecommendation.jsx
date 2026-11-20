@@ -23,15 +23,14 @@ export default function FertilizerRecommendation() {
   }
 
   const nutrients = result ? [
-    { name:'Nitrogen (N)', val: result.nitrogen_kg_ha, total: result.total_nitrogen_kg, color:'#4ade80', icon:'🟢' },
-    { name:'Phosphorus (P)', val: result.phosphorus_kg_ha, total: result.total_phosphorus_kg, color:'#fb923c', icon:'🟠' },
-    { name:'Potassium (K)', val: result.potassium_kg_ha, total: result.total_potassium_kg, color:'#facc15', icon:'🟡' },
+    { name:'Nitrogen (N)', val: result.nitrogen_kg_ha, total: result.total_nitrogen_kg, color:'var(--brand)', icon:'' },
+    { name:'Phosphorus (P)', val: result.phosphorus_kg_ha, total: result.total_phosphorus_kg, color:'var(--earth)', icon:'' },
+    { name:'Potassium (K)', val: result.potassium_kg_ha, total: result.total_potassium_kg, color:'var(--warn)', icon:'' },
   ] : []
 
   return (
     <div className="page-container fade-in">
       <div className="page-header">
-        <div className="page-icon">🧪</div>
         <div>
           <h1 className="page-title">Fertilizer Recommendation</h1>
           <p className="page-subtitle">Precision NPK calculator based on crop, soil & growth stage</p>
@@ -70,24 +69,24 @@ export default function FertilizerRecommendation() {
               </div>
             </div>
             <button className="btn btn-primary" type="submit" disabled={loading} style={{width:'100%',justifyContent:'center'}}>
-              {loading ? '⏳ Calculating...' : '🧪 Get NPK Recommendation'}
+              {loading ? 'Calculating...' : 'Get NPK Recommendation'}
             </button>
           </form>
         </div>
 
         <div className="glass-card" style={{padding:'28px'}}>
-          <h3 style={{fontWeight:700,marginBottom:'20px',color:'var(--text-secondary)'}}>📋 NPK Recommendation</h3>
+          <h3 style={{fontWeight:700,marginBottom:'20px',color:'var(--text-secondary)'}}>NPK Recommendation</h3>
           {loading && <div className="loading-screen"><div className="spinner"/><p>Calculating optimal NPK...</p></div>}
           {!result && !loading && (
             <div style={{textAlign:'center',padding:'64px',color:'var(--text-muted)'}}>
-              <div style={{fontSize:'4rem',marginBottom:'16px'}}>🧪</div><p>Set crop parameters to get NPK recommendation</p>
+              <p>Set crop parameters to get NPK recommendation</p>
             </div>
           )}
           {result && (
             <div className="fade-in">
-              <div style={{padding:'16px',background:'rgba(74,222,128,0.08)',borderRadius:'12px',marginBottom:'20px',textAlign:'center'}}>
+              <div style={{padding:'16px',background:'var(--brand-tint)',borderRadius:'12px',marginBottom:'20px',textAlign:'center'}}>
                 <p style={{color:'var(--text-muted)',fontSize:'0.8rem',marginBottom:'4px'}}>Recommendation for</p>
-                <h2 style={{fontFamily:'Poppins',fontWeight:800,color:'var(--accent-green)'}}>{result.crop}</h2>
+                <h2 style={{fontFamily:'var(--font-display)',fontWeight:600,color:'var(--accent-green)'}}>{result.crop}</h2>
                 <div style={{display:'flex',gap:'8px',justifyContent:'center',marginTop:'8px',flexWrap:'wrap'}}>
                   <span className="badge badge-info">{result.soil_type} Soil</span>
                   <span className="badge badge-warning">{result.growth_stage} Stage</span>
@@ -97,10 +96,10 @@ export default function FertilizerRecommendation() {
 
               {/* NPK bars */}
               {nutrients.map(n => (
-                <div key={n.name} style={{marginBottom:'18px',padding:'16px',background:'rgba(0,0,0,0.2)',borderRadius:'12px',border:'1px solid var(--border)'}}>
+                <div key={n.name} style={{marginBottom:'18px',padding:'16px',background:'var(--surface-2)',borderRadius:'12px',border:'1px solid var(--border)'}}>
                   <div style={{display:'flex',justifyContent:'space-between',marginBottom:'8px'}}>
-                    <span style={{fontWeight:600,color:'var(--text-secondary)'}}>{n.icon} {n.name}</span>
-                    <span style={{fontFamily:'Poppins',fontWeight:800,color:n.color}}>{n.val} kg/ha</span>
+                    <span style={{fontWeight:600,color:'var(--text-secondary)'}}>{n.name}</span>
+                    <span style={{fontFamily:'var(--font-display)',fontWeight:600,color:n.color}}>{n.val} kg/ha</span>
                   </div>
                   <div className="progress-bar">
                     <div style={{height:'100%',borderRadius:'4px',width:`${Math.min(100,(n.val/300)*100)}%`,background:n.color,transition:'width 1s ease'}}/>
@@ -113,19 +112,19 @@ export default function FertilizerRecommendation() {
               ))}
 
               <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'12px',marginTop:'4px'}}>
-                <div style={{padding:'14px',background:'rgba(0,0,0,0.2)',borderRadius:'10px',textAlign:'center',border:'1px solid var(--border)'}}>
+                <div style={{padding:'14px',background:'var(--surface-2)',borderRadius:'10px',textAlign:'center',border:'1px solid var(--border)'}}>
                   <div style={{color:'var(--text-muted)',fontSize:'0.75rem',marginBottom:'4px'}}>COST PER HECTARE</div>
-                  <div style={{fontFamily:'Poppins',fontWeight:800,fontSize:'1.4rem',color:'var(--accent-yellow)'}}>₹{result.cost_estimate?.per_hectare?.toLocaleString()}</div>
+                  <div style={{fontFamily:'var(--font-display)',fontWeight:600,fontSize:'1.4rem',color:'var(--accent-yellow)'}}>₹{result.cost_estimate?.per_hectare?.toLocaleString()}</div>
                 </div>
-                <div style={{padding:'14px',background:'rgba(0,0,0,0.2)',borderRadius:'10px',textAlign:'center',border:'1px solid var(--border)'}}>
+                <div style={{padding:'14px',background:'var(--surface-2)',borderRadius:'10px',textAlign:'center',border:'1px solid var(--border)'}}>
                   <div style={{color:'var(--text-muted)',fontSize:'0.75rem',marginBottom:'4px'}}>TOTAL COST</div>
-                  <div style={{fontFamily:'Poppins',fontWeight:800,fontSize:'1.4rem',color:'var(--accent-orange)'}}>₹{result.cost_estimate?.total_field?.toLocaleString()}</div>
+                  <div style={{fontFamily:'var(--font-display)',fontWeight:600,fontSize:'1.4rem',color:'var(--accent-orange)'}}>₹{result.cost_estimate?.total_field?.toLocaleString()}</div>
                 </div>
               </div>
 
               {result.rainfall_note && (
                 <div className="alert alert-info" style={{marginTop:'14px',fontSize:'0.85rem'}}>
-                  💧 {result.rainfall_note}
+                  {result.rainfall_note}
                 </div>
               )}
             </div>

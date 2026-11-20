@@ -2,6 +2,7 @@ import os
 import numpy as np
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required
+from backend.services.activity import log_activity
 from PIL import Image
 
 soil_bp = Blueprint('soil', __name__)
@@ -201,6 +202,10 @@ def predict_soil():
 
         soil_info = SOIL_HEALTH_INFO.get(predicted_soil, SOIL_HEALTH_INFO['Loamy'])
         nutrient_analysis = analyze_soil_nutrients(ph, nitrogen, phosphorus, potassium, moisture, organic_carbon)
+
+        log_activity('soil_test', f'Soil test: {predicted_soil} soil, health score {nutrient_analysis["health_score"]}, '
+                     f'pH {ph}, N {nitrogen}, P {phosphorus}, K {potassium}',
+                     {'alerts': nutrient_analysis['alerts']})
 
         return jsonify({
             'success': True,

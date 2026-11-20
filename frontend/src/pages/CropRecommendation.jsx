@@ -19,13 +19,12 @@ export default function CropRecommendation() {
     finally { setLoading(false) }
   }
 
-  const levelColors = { 'Highly Recommended':'var(--accent-green)', 'Recommended':'#60a5fa', 'Moderately Suitable':'var(--accent-yellow)', 'Not Recommended':'#f87171' }
+  const levelColors = { 'Highly Recommended':'var(--accent-green)', 'Recommended':'var(--info)', 'Moderately Suitable':'var(--accent-yellow)', 'Not Recommended':'var(--danger)' }
   const levelBadge  = { 'Highly Recommended':'badge-success', 'Recommended':'badge-info', 'Moderately Suitable':'badge-warning', 'Not Recommended':'badge-danger' }
 
   return (
     <div className="page-container fade-in">
       <div className="page-header">
-        <div className="page-icon">🌱</div>
         <div>
           <h1 className="page-title">Crop Recommendation</h1>
           <p className="page-subtitle">AI-powered multi-factor crop suitability analysis</p>
@@ -35,7 +34,7 @@ export default function CropRecommendation() {
       <div style={{ display: 'grid', gridTemplateColumns: '380px 1fr', gap: '24px' }}>
         {/* Form */}
         <div className="glass-card" style={{ padding: '24px', height: 'fit-content' }}>
-          <h3 style={{ fontWeight: 700, marginBottom: '20px', color: 'var(--text-secondary)' }}>⚙️ Farm Parameters</h3>
+          <h3 style={{ fontWeight: 700, marginBottom: '20px', color: 'var(--text-secondary)' }}>Farm Parameters</h3>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label className="form-label">Annual Rainfall (mm)</label>
@@ -96,7 +95,7 @@ export default function CropRecommendation() {
               </div>
             </div>
             <button className="btn btn-primary" type="submit" disabled={loading} style={{width:'100%',justifyContent:'center'}}>
-              {loading ? '⏳ Analyzing...' : '🌱 Get Recommendations'}
+              {loading ? 'Analyzing...' : 'Get Recommendations'}
             </button>
           </form>
         </div>
@@ -106,7 +105,7 @@ export default function CropRecommendation() {
           {loading && <div className="loading-screen glass-card" style={{padding:'64px'}}><div className="spinner"/><p>Analyzing 12 crops...</p></div>}
           {!loading && results.length === 0 && (
             <div className="glass-card" style={{padding:'64px',textAlign:'center',color:'var(--text-muted)'}}>
-              <div style={{fontSize:'4rem',marginBottom:'16px'}}>🌾</div>
+              
               <p>Fill the form and click Recommend to see AI-ranked crops</p>
             </div>
           )}
@@ -116,45 +115,45 @@ export default function CropRecommendation() {
                 <div key={r.crop} className="glass-card" style={{padding:'20px',marginBottom:'14px',borderLeft:`3px solid ${levelColors[r.level]||'var(--border)'}`}}>
                   <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:'12px',flexWrap:'wrap',gap:'8px'}}>
                     <div style={{display:'flex',alignItems:'center',gap:'12px'}}>
-                      <span style={{fontFamily:'Poppins',fontWeight:800,fontSize:'1.3rem',color:levelColors[r.level]||'#fff'}}>#{i+1}</span>
+                      <span style={{fontFamily:'var(--font-display)',fontWeight:600,fontSize:'1.3rem',color:levelColors[r.level]||'var(--ink)'}}>#{i+1}</span>
                       <div>
-                        <h3 style={{fontFamily:'Poppins',fontWeight:700,fontSize:'1.1rem'}}>{r.crop}</h3>
+                        <h3 style={{fontFamily:'var(--font-display)',fontWeight:700,fontSize:'1.1rem'}}>{r.crop}</h3>
                         <div style={{display:'flex',gap:'8px',flexWrap:'wrap',marginTop:'4px'}}>
                           <span className={`badge ${levelBadge[r.level]||'badge-info'}`}>{r.level}</span>
-                          <span className="badge badge-orange">⏱ {r.duration}</span>
-                          <span className="badge badge-info">💹 {r.profit.replace('_',' ').replace(/\b\w/g,l=>l.toUpperCase())} profit</span>
+                          <span className="badge badge-orange">{r.duration}</span>
+                          <span className="badge badge-info">{r.profit.replace('_',' ').replace(/\b\w/g,l=>l.toUpperCase())} profit</span>
                         </div>
                       </div>
                     </div>
                     <div style={{textAlign:'right'}}>
-                      <div style={{fontFamily:'Poppins',fontSize:'1.8rem',fontWeight:800,color:levelColors[r.level]||'#fff'}}>{r.score}%</div>
+                      <div style={{fontFamily:'var(--font-display)',fontSize:'1.8rem',fontWeight:600,color:levelColors[r.level]||'var(--ink)'}}>{r.score}%</div>
                       <div style={{fontSize:'0.75rem',color:'var(--text-muted)'}}>Suitability</div>
                     </div>
                   </div>
                   <div className="progress-bar" style={{marginBottom:'14px'}}>
-                    <div className="progress-fill" style={{width:`${r.score}%`,background:`linear-gradient(90deg,${levelColors[r.level]||'#4ade80'},${levelColors[r.level]||'#4ade80'}88)`}} />
+                    <div className="progress-fill" style={{width:`${r.score}%`,background:levelColors[r.level]||'var(--brand)'}} />
                   </div>
                   <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(180px,1fr))',gap:'8px',marginBottom:'12px'}}>
-                    <div style={{padding:'10px',background:'rgba(0,0,0,0.2)',borderRadius:'8px',fontSize:'0.82rem'}}>
+                    <div style={{padding:'10px',background:'var(--surface-2)',borderRadius:'8px',fontSize:'0.82rem'}}>
                       <span style={{color:'var(--text-muted)'}}>Est. Yield: </span>
                       <strong style={{color:'var(--accent-green)'}}>{r.estimated_yield_kg_ha?.toLocaleString()} kg/ha</strong>
                     </div>
-                    <div style={{padding:'10px',background:'rgba(0,0,0,0.2)',borderRadius:'8px',fontSize:'0.82rem'}}>
+                    <div style={{padding:'10px',background:'var(--surface-2)',borderRadius:'8px',fontSize:'0.82rem'}}>
                       <span style={{color:'var(--text-muted)'}}>Investment: </span>
                       <strong style={{color:'var(--accent-yellow)'}}>₹{r.investment_per_ha?.toLocaleString()}/ha</strong>
                     </div>
-                    <div style={{padding:'10px',background:'rgba(0,0,0,0.2)',borderRadius:'8px',fontSize:'0.82rem'}}>
+                    <div style={{padding:'10px',background:'var(--surface-2)',borderRadius:'8px',fontSize:'0.82rem'}}>
                       <span style={{color:'var(--text-muted)'}}>Market: </span>
                       <strong>{r.market}</strong>
                     </div>
-                    <div style={{padding:'10px',background:'rgba(0,0,0,0.2)',borderRadius:'8px',fontSize:'0.82rem'}}>
+                    <div style={{padding:'10px',background:'var(--surface-2)',borderRadius:'8px',fontSize:'0.82rem'}}>
                       <span style={{color:'var(--text-muted)'}}>Water: </span>
                       <strong>{r.water_need}</strong>
                     </div>
                   </div>
                   <div style={{display:'flex',flexWrap:'wrap',gap:'4px'}}>
                     {r.details?.slice(0,4).map((d,j)=>(
-                      <span key={j} style={{fontSize:'0.75rem',padding:'2px 8px',borderRadius:'8px',background:'rgba(0,0,0,0.25)',color:d.includes('✓')?'var(--accent-green)':'var(--accent-yellow)'}}>{d}</span>
+                      <span key={j} style={{fontSize:'0.75rem',padding:'2px 8px',borderRadius:'8px',background:'var(--surface-2)',color:d.includes('')?'var(--accent-green)':'var(--accent-yellow)'}}>{d}</span>
                     ))}
                   </div>
                 </div>

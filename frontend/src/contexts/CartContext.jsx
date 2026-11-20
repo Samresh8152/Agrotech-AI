@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import api from '../services/api'
 import { useAuth } from './AuthContext'
+import { FEATURES } from '../config'
 
 const CartContext = createContext(null)
 
@@ -12,7 +13,7 @@ export function CartProvider({ children }) {
   const [loading, setLoading] = useState(false)
 
   const fetchCart = useCallback(async () => {
-    if (!isAuth) { setCart([]); setCartCount(0); setCartTotal(0); return }
+    if (!isAuth || !FEATURES.marketplace) { setCart([]); setCartCount(0); setCartTotal(0); return }
     try {
       const { data } = await api.get('/marketplace/cart')
       if (data.success) {

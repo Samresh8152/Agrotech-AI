@@ -1,0 +1,339 @@
+AgroTech AI: Hybrid CNN–LLM Plant Disease Diagnosis and Context-Aware Advisory for Farmers
+
+Samresh Chaudhari
+
+Department of
+
+Information Technology
+
+VESIT, Mumbai, India
+
+Shrijeet Deshmukh
+
+Department of
+
+Information Technology
+
+VESIT, Mumbai, India
+
+Harsh Totani
+
+Department of
+
+Information Technology
+
+VESIT, Mumbai, India
+
+Chinmay Bhutada
+
+Department of
+
+Information Technology
+
+VESIT, Mumbai, India
+
+Prof. Archana Kshirsagar
+
+Project Mentor
+
+Department of Information Technology
+
+VESIT, Mumbai, India
+
+Abstract—Most digital farm advisory tools are either disease classifiers limited to the crops they were trained on, or generic chatbots that know nothing about the farmer. This paper presents AgroTech AI, a full-stack advisory platform that combines a hybrid plant-disease diagnosis module, a context-aware farmer assistant, crop, soil, fertilizer, yield and weather services, and a farmer-to-buyer marketplace. For crops covered by a transfer-learned VGG16 convolutional neural network (CNN), the CNN and the Google Gemini multimodal large language model (LLM) diagnose the image independently and are combined by a plant-conditioned weighted vote; any other species is diagnosed by Gemini, and the CNN serves as an offline fallback. The assistant grounds each answer in the farmer's profile, automatically learned facts and tool history. The CNN reaches 88.6% validation accuracy on 33 PlantVillage classes, and we show that a training–inference normalisation mismatch caused confident misclassifications. A feature ablation on 28,242 FAO-derived records shows that an environment-only Random Forest yield model fails to generalise (R2 = −0.20), whereas adding crop type, country and year raises R2 to 0.955 under a temporal split.
+
+Index Terms—plant disease detection, hybrid CNN–LLM ensemble, Gemini, transfer learning, crop yield prediction, conversational assistant, precision agriculture
+
+I. INTRODUCTION
+
+Most farms in developing economies are small, rain-fed and managed with little access to agronomic expertise. Crop diseases, poorly matched crop choices and imprecise fertilizer use reduce yields, and climate variability makes past experience less reliable. Advisory services built on machine learning (ML) can close part of this gap [5], [7], [18], but current systems show three weaknesses. Image-based disease classifiers achieve high accuracy on curated datasets such as PlantVillage [2] but are closed-set and degrade on field photographs [1], [4]. General multimodal LLMs [11] can describe almost any plant problem but depend on network access and quotas and may give confident errors. Finally, most tools are stateless: every query is answered without knowing the farmer's crops, location or earlier results.
+
+AgroTech AI addresses these gaps in one platform. Its contributions are:
+
+A hybrid, plant-conditioned CNN–LLM diagnosis method in which the CNN is restricted to the stated plant's classes, Gemini diagnoses independently and maps its answer onto the CNN's labels, and a weighted vote combines the two, with LLM-only diagnosis for unsupported species and CNN fallback when the LLM is unavailable.
+
+A context-aware assistant that builds each prompt from the farmer's profile, learned facts, recent tool results and conversation, and replies in English, Hindi or Hinglish.
+
+Empirical findings on the deployed models: CNN accuracy, the impact of an input-normalisation error, and a feature ablation showing that crop identity is essential for yield prediction.
+
+II. LITERATURE REVIEW
+
+Mohanty et al. [1] trained AlexNet and GoogLeNet on 54,306 PlantVillage images across 38 classes and reported 99.35% held-out accuracy, but accuracy dropped substantially on images from other sources. Ferentinos [3] extended this to 58 classes across 25 plants with VGG-style networks [8]; both rely on ImageNet transfer learning [12], [13], as our CNN does. Singh et al. [4] introduced the PlantDoc field dataset and showed that laboratory-trained models transfer poorly to real conditions, a dataset bias also highlighted by Kamilaris and Prenafeta-Boldú [5].
+
+For yield prediction, a systematic review by van Klompenburg et al. [6] found temperature, rainfall and soil type to be the most used features and Random Forests [10] among the most used algorithms. Multimodal LLMs such as Gemini [11] accept images and return structured output, and retrieval-augmented generation [16] shows that grounding an LLM in external data improves factuality. Ensemble theory [15] indicates that combining independent predictors with different error profiles reduces error. We found no system that combines a domain CNN with an open-set LLM while remaining usable offline, and that also keeps a persistent, farmer-editable memory across advisory tools. Table I summarises representative work.
+
+Table I
+
+Comparison of Related Work
+
+Ref.
+
+Approach
+
+Limitation
+
+[1] 2016
+
+CNNs on PlantVillage, 38 classes
+
+Closed set; drops on images from other sources
+
+[3] 2018
+
+VGG-type CNNs, 58 classes
+
+Closed set; controlled imagery
+
+[4] 2020
+
+CNNs on PlantDoc field images
+
+Small dataset; closed set
+
+[6] 2020
+
+Review of ML yield models
+
+Few deployed end-to-end systems
+
+[11] 2023
+
+Multimodal LLM (Gemini)
+
+Not domain-calibrated; needs connectivity
+
+Ours
+
+Hybrid CNN + LLM with personalised assistant
+
+Field evaluation ongoing
+
+III. PROPOSED SYSTEM
+
+AgroTech AI is a web platform for farmers and buyers. After email-OTP registration, a farmer can diagnose plant diseases from a photo, chat with the Krishi Mitra assistant, obtain crop recommendations, soil-health analysis, NPK fertilizer plans and yield estimates, view live weather, and buy or sell through the marketplace. Every advisory result is written to the farmer's activity log, which the assistant uses as context.
+
+The system follows a layered architecture (Fig. 1). A React single-page application calls a Flask REST API organised into one blueprint per feature. Feature modules use a local deep-learning model (VGG16), a cloud LLM (Gemini), and classical models and rule engines (scikit-learn Random Forests, crop-suitability scoring and NPK rules). All state, including the assistant's memory, is stored in a relational database.
+
+Fig. 1. AgroTech AI system architecture.
+
+IV. METHODOLOGY
+
+A. Plant-Conditioned CNN
+
+The CNN outputs a softmax distribution p(c) over N = 33 crop–disease classes. Since the farmer states the plant k, classes of other plants are excluded. With π(c) the plant of class c:
+
+	pC(c | k) = p(c)·1[π(c)=k] / Σc′ p(c′)·1[π(c′)=k]	(1)
+
+This removes impossible cross-crop confusions. Plant names are normalised with an alias table that includes common Hindi names (e.g., tamatar → tomato).
+
+B. Structured LLM Diagnosis and Fusion
+
+Gemini receives the image, the stated plant and a JSON response schema covering plant identity and whether it matches the stated plant, disease, pathogen type, confidence, severity, symptoms, organic and chemical treatment, and prevention. For CNN-covered plants, the schema adds model_class_match, an enumeration of the plant's CNN classes plus "none", onto which Gemini maps its own diagnosis. Gemini never sees the CNN's prediction, so the two opinions stay independent [15]. With Gemini confidence g, matched class m and n classes for plant k:
+
+	pG(c) = g if c = m;  (1 − g)/(n − 1) otherwise	(2)
+
+	S(c) = 0.6·pG(c) + 0.4·pC(c | k),   ĉ = argmaxc S(c)	(3)
+
+The result is labelled agree when both models choose ĉ, gemini_preferred or cnn_preferred when the more confident model outvotes the other (the farmer is warned in the latter case), and gemini_only when Gemini reports a condition outside the CNN's classes (e.g., a nutrient deficiency) or a different plant. The LLM is weighted higher because it covers more conditions and field imagery, whereas the CNN is calibrated only on in-domain images. To cope with model retirement, overload (HTTP 503) and quota limits (HTTP 429), the client tries an ordered list of models within a 75 s budget; if all fail, the CNN result is returned with the cause. Fig. 2 summarises the pipeline.
+
+Fig. 2. Hybrid plant-disease diagnosis pipeline.
+
+C. Context-Aware Assistant
+
+For each message the assistant builds a system prompt from the date, the farmer's profile, up to 40 remembered facts and the 15 latest activity records (disease scans, soil tests, crop, fertilizer and yield results), plus rules such as per-acre doses, organic options first, safety precautions and referral to the local Krishi Vigyan Kendra for severe cases. The last 20 turns form the dialogue history. Gemini returns {reply, new_facts}; new lasting facts (e.g., "grows wheat on 3 acres") are de-duplicated and stored, and the farmer can view or delete them (Fig. 3). This is retrieval-augmented generation [16] over the farmer's own structured records.
+
+Fig. 3. Context assembly and memory update in the assistant.
+
+D. Advisory Models
+
+The crop advisor scores 12 crops from ten farmer inputs using seven weighted criteria (rainfall 20, temperature 20, soil 15, pH 10, season 10, water 10, market 10, plus 5 base points), with linear partial credit outside each crop's optimal range; crops scoring ≥ 80 are highly recommended. Yield is predicted by a 100-tree Random Forest [10] on rainfall, pesticide use and temperature. Fertilizer plans adjust crop-specific base NPK by rainfall, soil type and growth stage, and soil health is scored by thresholds on pH, N, P, K, moisture and organic carbon.
+
+V. DATASET AND IMPLEMENTATION
+
+Disease images. The CNN was trained on the augmented New Plant Diseases dataset [20] derived from PlantVillage [2]: 33 classes across nine crops, 650 images per class (21,450 images), resized to 150 × 150, scaled to [0, 1] and split 75/25 into 16,087 training and 5,363 validation images. An ImageNet-pretrained VGG16 [8], [12] with frozen convolutional layers, global average pooling and a softmax head was trained with Adam [14].
+
+Crop yield. The yield data contain 28,242 records from 101 countries, 10 crops and the years 1990–2013, compiled from FAOSTAT and World Bank climate data [19], with yield (hg/ha), rainfall, pesticide use and temperature. Pesticide values were merged by country and year, incomplete rows were removed and features were standardised.
+
+Generalisation pipeline. To extend the CNN beyond nine crops, a training pipeline merges any datasets organised as Plant___Disease folders (e.g., PlantVillage and PlantDoc [4]) and fine-tunes EfficientNetV2-B0 [9] at 224 × 224 with augmentation, class weighting, label smoothing [17] and early stopping; the API loads the resulting label file automatically, so new crops need no code changes.
+
+Implementation. The frontend uses React 18 and Vite; the backend uses Python 3.11, Flask, SQLAlchemy over SQLite, TensorFlow/Keras and scikit-learn, with the Gemini, OpenWeatherMap and Razorpay APIs. Passwords are hashed with bcrypt, sessions use JSON Web Tokens, and payments are verified server-side. Three tables, activity_logs, chat_messages and user_memories, support personalisation and are scoped to the authenticated user. Integration tests with an isolated database and controlled Gemini responses exercised every fusion branch, memory extraction and de-duplication.
+
+VI. RESULTS AND DISCUSSION
+
+A. Disease CNN
+
+The CNN reaches 96.2% training and 88.6% validation accuracy after five epochs, with a stable validation loss of 0.342 (Table II). The 7.6-point gap reflects the frozen backbone, small input size and limited images per class, which the generalisation pipeline addresses. During integration we found that inference fed raw 0–255 pixels to a network trained on [0, 1] inputs; on seven labelled test images this produced only 2 correct predictions, several with near-100% confidence for the wrong crop, versus 6 of 7 after correction. The scaling is now stored with the model metadata to prevent recurrence.
+
+Table II
+
+Disease CNN Performance (VGG16, 33 Classes)
+
+Metric
+
+Value
+
+Training / validation images
+
+16,087 / 5,363
+
+Training accuracy
+
+96.2%
+
+Validation accuracy
+
+88.6%
+
+Validation loss
+
+0.342
+
+B. Hybrid Fusion
+
+Table III shows fusion outcomes for a tomato bacterial-spot image using the real CNN and controlled Gemini outputs. Agreement yields high confidence; an uncertain Gemini (40%) is outvoted by a confident CNN, lowering combined confidence to 38.8% and warning the farmer; conditions outside the CNN's classes pass through from Gemini. With the live service, Gemini labelled the same image as target spot and outweighed the CNN's correct 87% prediction, while correctly flagging a photo submitted as "rice" as a tomato leaf. This supports showing both opinions to the farmer and learning the fusion weights from validation data. Gemini returned structured diagnoses in 5.3–7.7 s, and overload and quota errors observed during testing were absorbed by the fallback chain.
+
+Table III
+
+Fusion Outcomes (Tomato Leaf)
+
+Gemini output
+
+Final
+
+Conf.
+
+Status
+
+Bacterial spot, 90%
+
+Bacterial spot
+
+88.8%
+
+agree
+
+Early blight, 40%
+
+Bacterial spot
+
+38.8%
+
+cnn_preferred
+
+Early blight, 95%
+
+Early blight
+
+57.2%
+
+gemini_preferred
+
+Mg deficiency, 80%
+
+Mg deficiency
+
+80.0%
+
+gemini_only
+
+C. Assistant
+
+Asked in Hinglish by a farmer growing tomatoes on two acres in Nashik what to do after their last scan, the assistant replied in Hinglish, cited the latest diagnosis (bacterial spot, medium severity), gave per-acre doses of copper oxychloride and streptocycline with safety precautions, and stored the facts "grows tomatoes on 2 acres" and "located in Nashik"; a repeated fact was not duplicated.
+
+D. Yield Prediction
+
+On its own test split, the deployed yield model scores RMSE = 93,383 hg/ha and R2 = −0.20, worse than predicting the mean, because rainfall, pesticide and temperature are identical for every crop in a given country and year. Table IV adds categorical features and also reports a temporal split (train 1990–2008, test 2009–2013) to avoid optimistic estimates. Crop type alone raises temporal R2 from 0.10 to 0.90, and country and year bring it to 0.955, which is the largest accuracy gain available in the system and needs only inputs the farmer already provides.
+
+Table IV
+
+Yield Model Feature Ablation (Random Forest)
+
+Features
+
+R² random
+
+R² temporal
+
+MAE temporal
+
+Environment only
+
+−0.202
+
+0.095
+
+67,359
+
++ crop
+
+0.972
+
+0.903
+
+14,607
+
++ crop + country
+
+0.974
+
+0.914
+
+13,835
+
++ crop + country + year
+
+0.987
+
+0.955
+
+10,276
+
+Overall, the specialist CNN and the generalist LLM are complementary, but neither is reliable enough alone; a preprocessing error and a missing categorical feature each caused larger errors than any architectural choice; and logging tool results with a small editable memory is sufficient for personalised advice.
+
+Ethical considerations. Recommendations are decision support, not prescriptions: both model opinions and confidences are shown, chemical advice includes safety precautions, and severe cases are referred to agricultural experts. Images and messages are sent to a third-party LLM, which requires informed consent; personal data are scoped to each user, and remembered facts can be deleted. PlantVillage's laboratory images and nine-crop coverage may disadvantage farmers with less common crops.
+
+VII. CONCLUSION AND FUTURE WORK
+
+AgroTech AI combines a plant-conditioned CNN with a multimodal LLM so that any plant can be diagnosed while an offline specialist is retained and disagreements are made visible, and it uses a memory-grounded assistant to personalise advice from each farmer's history. The CNN achieves 88.6% validation accuracy, and adding crop identity raises yield-model R2 from 0.10 to 0.90 under a temporal split. Future work will retrain the CNN on PlantVillage, PlantDoc and regional field images, learn and calibrate the fusion weights, compare the CNN, LLM and hybrid on field test sets, deploy the crop-aware yield model, add on-device inference and voice input in more Indian languages, and conduct a usability study with farmers.
+
+REFERENCES
+
+[1] S. P. Mohanty, D. P. Hughes, and M. Salathé, "Using deep learning for image-based plant disease detection," Frontiers in Plant Science, vol. 7, Art. 1419, 2016.
+
+[2] D. P. Hughes and M. Salathé, "An open access repository of images on plant health to enable the development of mobile disease diagnostics," arXiv:1511.08060, 2015.
+
+[3] K. P. Ferentinos, "Deep learning models for plant disease detection and diagnosis," Computers and Electronics in Agriculture, vol. 145, pp. 311–318, 2018.
+
+[4] D. Singh, N. Jain, P. Jain, P. Kayal, S. Kumawat, and N. Batra, "PlantDoc: A dataset for visual plant disease detection," in Proc. 7th ACM IKDD CoDS and 25th COMAD, 2020, pp. 249–253.
+
+[5] A. Kamilaris and F. X. Prenafeta-Boldú, "Deep learning in agriculture: A survey," Computers and Electronics in Agriculture, vol. 147, pp. 70–90, 2018.
+
+[6] T. van Klompenburg, A. Kassahun, and C. Catal, "Crop yield prediction using machine learning: A systematic literature review," Computers and Electronics in Agriculture, vol. 177, Art. 105709, 2020.
+
+[7] K. G. Liakos, P. Busato, D. Moshou, S. Pearson, and D. Bochtis, "Machine learning in agriculture: A review," Sensors, vol. 18, no. 8, Art. 2674, 2018.
+
+[8] K. Simonyan and A. Zisserman, "Very deep convolutional networks for large-scale image recognition," in Proc. Int. Conf. Learning Representations (ICLR), 2015.
+
+[9] M. Tan and Q. V. Le, "EfficientNetV2: Smaller models and faster training," in Proc. 38th Int. Conf. Machine Learning (ICML), 2021, pp. 10096–10106.
+
+[10] L. Breiman, "Random forests," Machine Learning, vol. 45, no. 1, pp. 5–32, 2001.
+
+[11] Gemini Team, Google, "Gemini: A family of highly capable multimodal models," arXiv:2312.11805, 2023.
+
+[12] J. Deng, W. Dong, R. Socher, L.-J. Li, K. Li, and L. Fei-Fei, "ImageNet: A large-scale hierarchical image database," in Proc. IEEE Conf. Computer Vision and Pattern Recognition (CVPR), 2009, pp. 248–255.
+
+[13] S. J. Pan and Q. Yang, "A survey on transfer learning," IEEE Trans. Knowledge and Data Engineering, vol. 22, no. 10, pp. 1345–1359, 2010.
+
+[14] D. P. Kingma and J. Ba, "Adam: A method for stochastic optimization," in Proc. Int. Conf. Learning Representations (ICLR), 2015.
+
+[15] T. G. Dietterich, "Ensemble methods in machine learning," in Multiple Classifier Systems, LNCS vol. 1857, Springer, 2000, pp. 1–15.
+
+[16] P. Lewis et al., "Retrieval-augmented generation for knowledge-intensive NLP tasks," in Advances in Neural Information Processing Systems, vol. 33, 2020, pp. 9459–9474.
+
+[17] C. Szegedy, V. Vanhoucke, S. Ioffe, J. Shlens, and Z. Wojna, "Rethinking the Inception architecture for computer vision," in Proc. IEEE Conf. Computer Vision and Pattern Recognition (CVPR), 2016, pp. 2818–2826.
+
+[18] K. Jha, A. Doshi, P. Patel, and M. Shah, "A comprehensive review on automation in agriculture using artificial intelligence," Artificial Intelligence in Agriculture, vol. 2, pp. 1–12, 2019.
+
+[19] Food and Agriculture Organization of the United Nations, "FAOSTAT statistical database," and The World Bank, "Climate Change Knowledge Portal." [Online]. Available: https://www.fao.org/faostat/ and https://climateknowledgeportal.worldbank.org/
+
+[20] "New Plant Diseases Dataset (augmented PlantVillage)," Kaggle. [Online]. Available: https://www.kaggle.com/datasets/vipoooool/new-plant-diseases-dataset

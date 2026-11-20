@@ -1,0 +1,449 @@
+{
+  "images_found": 22746,
+  "unreadable": [],
+  "duplicates_removed": 19,
+  "label_conflicts": [
+    {
+      "hash": "f5d3b38bcd757976",
+      "labels": [
+        "Pepper_bell___Bacterial_spot",
+        "Tomato___Septoria_leaf_spot"
+      ],
+      "files": [
+        "plantdoc/Bell_pepper leaf spot/Septoria-leaf-spot.jpg",
+        "plantdoc/Tomato Septoria leaf spot/tomato-blight-treatment-blight.jpg"
+      ]
+    },
+    {
+      "hash": "a9818998a064edec",
+      "labels": [
+        "Corn___Cercospora_leaf_spot_Gray_leaf_spot",
+        "Corn___Northern_Leaf_Blight"
+      ],
+      "files": [
+        "plantdoc/Corn Gray leaf spot/2015070295153021.jpg",
+        "plantdoc_test/Corn leaf blight/2015070295153021.jpg"
+      ]
+    },
+    {
+      "hash": "f8fef6dcdcdcfc6c",
+      "labels": [
+        "Corn___Cercospora_leaf_spot_Gray_leaf_spot",
+        "Corn___Northern_Leaf_Blight"
+      ],
+      "files": [
+        "plantdoc/Corn Gray leaf spot/corn-gray-leaf-spot-f4.jpg",
+        "plantdoc_test/Corn leaf blight/corn-gray-leaf-spot-f4.jpg"
+      ]
+    },
+    {
+      "hash": "358d4cf6f8f82ea6",
+      "labels": [
+        "Corn___Cercospora_leaf_spot_Gray_leaf_spot",
+        "Corn___Northern_Leaf_Blight"
+      ],
+      "files": [
+        "plantdoc/Corn leaf blight/IMG_42231.jpg",
+        "plantdoc_test/Corn Gray leaf spot/IMG_42231.jpg"
+      ]
+    },
+    {
+      "hash": "8c1f230911472e1d",
+      "labels": [
+        "Potato___Early_blight",
+        "Potato___Late_blight"
+      ],
+      "files": [
+        "plantdoc/Potato leaf early blight/1421_0.jpeg?itok=FMtmgePj.jpg",
+        "plantdoc_test/Potato leaf late blight/1421_0.jpeg?itok=FMtmgePj.jpg"
+      ]
+    },
+    {
+      "hash": "e96a7f7adbebef6d",
+      "labels": [
+        "Potato___Early_blight",
+        "Potato___Late_blight"
+      ],
+      "files": [
+        "plantdoc/Potato leaf early blight/18028_1.jpg",
+        "plantdoc/Potato leaf late blight/24064_1.jpg"
+      ]
+    },
+    {
+      "hash": "e5e2cbc9e4a3d1ec",
+      "labels": [
+        "Potato___Early_blight",
+        "Tomato___Early_blight"
+      ],
+      "files": [
+        "plantdoc/Potato leaf early blight/2OBH_29_Gardening_early_blight.jpg",
+        "plantdoc/Tomato Early blight leaf/Early_Blight_of_Tomato1687.jpg"
+      ]
+    },
+    {
+      "hash": "6933626063732627",
+      "labels": [
+        "Potato___Early_blight",
+        "Potato___Late_blight",
+        "Tomato___Late_blight"
+      ],
+      "files": [
+        "plantdoc/Potato leaf early blight/5816740026_d42ef24413_Phytophthora-Infestans.jpg",
+        "plantdoc/Tomato leaf late blight/tomato-late-blight-foliar-lesions_Scot-Nelson_CC-BY-SA-2.0.jpg",
+        "plantdoc_test/Potato leaf late blight/5816740026_d42ef24413_Phytophthora-Infestans.jpg"
+      ]
+    },
+    {
+      "hash": "646ce4ce8cd0e464",
+      "labels": [
+        "Potato___Early_blight",
+        "Tomato___Late_blight"
+      ],
+      "files": [
+        "plantdoc/Potato leaf early blight/Blght.jpg",
+        "plantdoc/Tomato leaf late blight/LBleaf2INIA_0.jpg"
+      ]
+    },
+    {
+      "hash": "043c3824271c1c48",
+      "labels": [
+        "Potato___Early_blight",
+        "Tomato___Late_blight"
+      ],
+      "files": [
+        "plantdoc/Potato leaf early blight/Early-Blight-Leaves-56a348bf3df78cf7727cb35e.jpg",
+        "plantdoc/Tomato leaf late blight/Pest2369.jpg"
+      ]
+    },
+    {
+      "hash": "6879737b5172b313",
+      "labels": [
+        "Potato___Early_blight",
+        "Tomato___Septoria_leaf_spot"
+      ],
+      "files": [
+        "plantdoc/Potato leaf early blight/IMG_9055.JPG.jpg",
+        "plantdoc/Tomato Septoria leaf spot/caf212ccf4696675469a0beaa9e57213.jpg"
+      ]
+    },
+    {
+      "hash": "caf2727454747849",
+      "labels": [
+        "Potato___Early_blight",
+        "Tomato___Early_blight"
+      ],
+      "files": [
+        "plantdoc/Potato leaf early blight/early-blight-closeup-NCSU.jpg",
+        "plantdoc/Tomato Early blight leaf/early-blight-closeup-sm.jpg"
+      ]
+    },
+    {
+      "hash": "ce0f0696969e4c4d",
+      "labels": [
+        "Potato___Early_blight",
+        "Potato___Late_blight"
+      ],
+      "files": [
+        "plantdoc/Potato leaf early blight/irish-blight-symptoms-on-potato-leaves-atmf8b.jpg",
+        "plantdoc_test/Potato leaf late blight/irish-blight-symptoms-on-potato-leaves-atmf8b.jpg"
+      ]
+    },
+    {
+      "hash": "b21b191180000193",
+      "labels": [
+        "Potato___Late_blight",
+        "Tomato___Late_blight"
+      ],
+      "files": [
+        "plantdoc/Potato leaf late blight/IMG_5813-1024x768.jpg",
+        "plantdoc/Tomato leaf late blight/IMG_5813.jpg"
+      ]
+    },
+    {
+      "hash": "4965665a9af5d5d9",
+      "labels": [
+        "Potato___Late_blight",
+        "Tomato___Late_blight"
+      ],
+      "files": [
+        "plantdoc/Potato leaf late blight/Jessore-potato-late-blight-8-2h2fdkl.jpg",
+        "plantdoc/Tomato leaf late blight/symptoms_of_late_blight_0.jpg"
+      ]
+    },
+    {
+      "hash": "162245c8e8ca48ee",
+      "labels": [
+        "Potato___Early_blight",
+        "Potato___Late_blight"
+      ],
+      "files": [
+        "plantdoc/Potato leaf late blight/backus-056-potato-blight.jpg",
+        "plantdoc_test/Potato leaf early blight/backus-056-potato-blight.jpg"
+      ]
+    },
+    {
+      "hash": "d8fc7ce268b1a344",
+      "labels": [
+        "Tomato___Early_blight",
+        "Tomato___Septoria_leaf_spot"
+      ],
+      "files": [
+        "plantdoc/Tomato Early blight leaf/b54d0e40027ff5e90e8ba7e1e9abf9bd--garden-guide-garden-ideas.jpg",
+        "plantdoc/Tomato Septoria leaf spot/b54d0e40027ff5e90e8ba7e1e9abf9bd.jpg"
+      ]
+    },
+    {
+      "hash": "089c3434a9b1b53d",
+      "labels": [
+        "Potato___Early_blight",
+        "Tomato___Early_blight"
+      ],
+      "files": [
+        "plantdoc/Tomato Early blight leaf/earlyblightpotato.jpg",
+        "plantdoc_test/Potato leaf early blight/earlyblightpotato.jpg"
+      ]
+    },
+    {
+      "hash": "0c1626397534c448",
+      "labels": [
+        "Tomato___Bacterial_spot",
+        "Tomato___Septoria_leaf_spot"
+      ],
+      "files": [
+        "plantdoc/Tomato Septoria leaf spot/tomato_V8.jpg",
+        "plantdoc_test/Tomato leaf bacterial spot/tomato_V8.jpg"
+      ]
+    },
+    {
+      "hash": "97999991d7cec9c9",
+      "labels": [
+        "Tomato___Leaf_Mold",
+        "Tomato___Yellow_Leaf_Curl_Virus"
+      ],
+      "files": [
+        "plantdoc/Tomato leaf yellow virus/tomato-yellow-leaf-curl-disease.jpg",
+        "plantdoc/Tomato mold leaf/tylc.jpg"
+      ]
+    }
+  ],
+  "final_images": 22686,
+  "per_class": {
+    "Apple___scab": {
+      "test_lab": 63,
+      "train": 562,
+      "val": 71,
+      "test_field": 26
+    },
+    "Apple___Black_rot": {
+      "train": 497,
+      "val": 62,
+      "test_lab": 62
+    },
+    "Apple___Cedar_apple_rust": {
+      "train": 273,
+      "test_lab": 28,
+      "val": 36,
+      "test_field": 26
+    },
+    "Apple___healthy": {
+      "train": 616,
+      "val": 78,
+      "test_lab": 70,
+      "test_field": 25
+    },
+    "Cherry___Powdery_mildew": {
+      "train": 560,
+      "test_lab": 70,
+      "val": 70
+    },
+    "Cherry___healthy": {
+      "train": 593,
+      "test_lab": 70,
+      "val": 75,
+      "test_field": 19
+    },
+    "Corn___Cercospora_leaf_spot_Gray_leaf_spot": {
+      "train": 455,
+      "val": 57,
+      "test_lab": 51,
+      "test_field": 15
+    },
+    "Corn___Common_rust": {
+      "train": 634,
+      "test_lab": 70,
+      "val": 80,
+      "test_field": 31
+    },
+    "Corn___Northern_Leaf_Blight": {
+      "test_lab": 70,
+      "train": 682,
+      "val": 88,
+      "test_field": 45
+    },
+    "Corn___healthy": {
+      "train": 560,
+      "test_lab": 70,
+      "val": 70
+    },
+    "Grape___Black_rot": {
+      "train": 599,
+      "val": 76,
+      "test_lab": 70,
+      "test_field": 19
+    },
+    "Grape___Esca": {
+      "train": 560,
+      "val": 70,
+      "test_lab": 70
+    },
+    "Grape___Leaf_blight": {
+      "train": 560,
+      "test_lab": 70,
+      "val": 70
+    },
+    "Grape___healthy": {
+      "train": 379,
+      "val": 48,
+      "test_lab": 42,
+      "test_field": 23
+    },
+    "Peach___Bacterial_spot": {
+      "train": 560,
+      "test_lab": 70,
+      "val": 70
+    },
+    "Peach___healthy": {
+      "val": 46,
+      "train": 360,
+      "test_lab": 36,
+      "test_field": 29
+    },
+    "Pepper_bell___Bacterial_spot": {
+      "train": 602,
+      "test_lab": 70,
+      "val": 76,
+      "test_field": 21
+    },
+    "Pepper_bell___healthy": {
+      "train": 597,
+      "test_lab": 70,
+      "val": 75,
+      "test_field": 19
+    },
+    "Potato___Early_blight": {
+      "val": 80,
+      "train": 629,
+      "test_lab": 70,
+      "test_field": 26
+    },
+    "Potato___Late_blight": {
+      "train": 625,
+      "val": 79,
+      "test_lab": 70,
+      "test_field": 23
+    },
+    "Potato___healthy": {
+      "train": 122,
+      "val": 15,
+      "test_lab": 15
+    },
+    "Strawberry___Leaf_scorch": {
+      "train": 560,
+      "test_lab": 70,
+      "val": 70
+    },
+    "Strawberry___healthy": {
+      "train": 425,
+      "val": 55,
+      "test_lab": 46,
+      "test_field": 26
+    },
+    "Tomato___Bacterial_spot": {
+      "train": 631,
+      "test_lab": 70,
+      "val": 80,
+      "test_field": 28
+    },
+    "Tomato___Early_blight": {
+      "train": 612,
+      "val": 77,
+      "test_lab": 70,
+      "test_field": 24
+    },
+    "Tomato___Late_blight": {
+      "test_lab": 70,
+      "train": 624,
+      "val": 79,
+      "test_field": 29
+    },
+    "Tomato___Leaf_Mold": {
+      "test_lab": 70,
+      "train": 619,
+      "val": 78,
+      "test_field": 23
+    },
+    "Tomato___Septoria_leaf_spot": {
+      "train": 653,
+      "val": 83,
+      "test_lab": 70,
+      "test_field": 38
+    },
+    "Tomato___Spider_mites": {
+      "train": 562,
+      "test_lab": 70,
+      "val": 70
+    },
+    "Tomato___Target_Spot": {
+      "train": 560,
+      "test_lab": 70,
+      "val": 70
+    },
+    "Tomato___Yellow_Leaf_Curl_Virus": {
+      "test_lab": 70,
+      "train": 607,
+      "val": 77,
+      "test_field": 19
+    },
+    "Tomato___mosaic_virus": {
+      "train": 330,
+      "test_lab": 37,
+      "val": 41,
+      "test_field": 19
+    },
+    "Tomato___healthy": {
+      "train": 598,
+      "val": 76,
+      "test_lab": 70,
+      "test_field": 19
+    }
+  },
+  "per_source": {
+    "plantvillage": {
+      "test_lab": 2060,
+      "train": 16478,
+      "val": 2060
+    },
+    "plantdoc": {
+      "train": 1328,
+      "test_field": 377,
+      "val": 188
+    },
+    "plantdoc_test": {
+      "test_field": 195
+    }
+  },
+  "unmapped": {
+    "plantdoc": [
+      "Blueberry leaf",
+      "Raspberry leaf",
+      "Soyabean leaf",
+      "Squash Powdery mildew leaf"
+    ],
+    "plantdoc_test": [
+      "Blueberry leaf",
+      "Raspberry leaf",
+      "Soyabean leaf",
+      "Squash Powdery mildew leaf"
+    ]
+  }
+}

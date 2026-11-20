@@ -41,6 +41,8 @@ def create_app():
     # ── Import models (needed for db.create_all) ────────────
     from backend.models.user import User
     from backend.models.marketplace import Product, CartItem, Order, OrderItem, Transaction
+    from backend.models.assistant import ActivityLog, ChatMessage, UserMemory
+    from backend.models.farm import FarmCrop
 
     # ── Register Blueprints ─────────────────────────────────
     from backend.routes.auth import auth_bp
@@ -52,6 +54,8 @@ def create_app():
     from backend.routes.payment import payment_bp
     from backend.routes.yield_pred import yield_bp
     from backend.routes.fertilizer import fertilizer_bp
+    from backend.routes.assistant import assistant_bp
+    from backend.routes.farm import farm_bp
 
     app.register_blueprint(auth_bp,        url_prefix='/api/auth')
     app.register_blueprint(disease_bp,     url_prefix='/api/disease')
@@ -62,6 +66,8 @@ def create_app():
     app.register_blueprint(payment_bp,     url_prefix='/api/payment')
     app.register_blueprint(yield_bp,       url_prefix='/api/yield')
     app.register_blueprint(fertilizer_bp,  url_prefix='/api/fertilizer')
+    app.register_blueprint(assistant_bp,   url_prefix='/api/assistant')
+    app.register_blueprint(farm_bp,        url_prefix='/api/farm')
 
     # ── Health check ────────────────────────────────────────
     @app.route('/api/health')

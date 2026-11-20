@@ -1,0 +1,12 @@
+{
+  "sources": [
+    {"name": "plantvillage", "path": "data/raw/plantvillage", "role": "lab"},
+    {"name": "plantdoc", "path": "data/raw/PlantDoc-Dataset/train", "role": "field"},
+    {"name": "plantdoc_test", "path": "data/raw/PlantDoc-Dataset/test", "role": "field_test"},
+    {"name": "rice", "path": "data/raw/rice_leaf_diseases", "role": "field", "plant": "Rice"},
+    {"name": "own_photos", "path": "data/raw/own_photos", "role": "field_test"}
+  ],
+  "mapping": {
+    "Bacterial leaf blight": "Rice___Bacterial_leaf_blight"
+  }
+}

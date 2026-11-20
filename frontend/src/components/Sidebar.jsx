@@ -1,85 +1,89 @@
 import { NavLink, useNavigate } from 'react-router-dom'
+import {
+  LuLayoutDashboard, LuMessagesSquare, LuMicroscope, LuShovel, LuCloudSun, LuSprout, LuChartColumn,
+  LuFlaskConical, LuStore, LuShoppingCart, LuPackage, LuWarehouse, LuLogOut,
+} from 'react-icons/lu'
 import { useAuth } from '../contexts/AuthContext'
 import { useCart } from '../contexts/CartContext'
 import toast from 'react-hot-toast'
+import { FEATURES } from '../config'
 
 const NAV = [
-  { section: 'Overview', items: [
-    { to: '/dashboard', icon: '🏠', label: 'Dashboard' },
+  { section: null, items: [
+    { to: '/dashboard', icon: LuLayoutDashboard, label: 'My farm' },
+    { to: '/assistant', icon: LuMessagesSquare, label: 'Krishi Mitra' },
   ]},
-  { section: 'AI Tools', items: [
-    { to: '/disease-prediction', icon: '🔬', label: 'Disease Detection' },
-    { to: '/soil-prediction', icon: '🪱', label: 'Soil Analysis' },
-    { to: '/weather', icon: '🌤', label: 'Weather Forecast' },
-    { to: '/crop-recommendation', icon: '🌱', label: 'Crop Advisor' },
+  { section: 'Diagnose', items: [
+    { to: '/disease-prediction', icon: LuMicroscope, label: 'Plant disease' },
+    { to: '/soil-prediction', icon: LuShovel, label: 'Soil health' },
+    { to: '/weather', icon: LuCloudSun, label: 'Weather' },
   ]},
-  { section: 'Farm Management', items: [
-    { to: '/yield-prediction', icon: '📊', label: 'Yield Prediction' },
-    { to: '/fertilizer', icon: '🧪', label: 'Fertilizer Guide' },
+  { section: 'Plan', items: [
+    { to: '/crop-recommendation', icon: LuSprout, label: 'What to sow' },
+    { to: '/yield-prediction', icon: LuChartColumn, label: 'Yield estimate' },
+    { to: '/fertilizer', icon: LuFlaskConical, label: 'Fertilizer plan' },
   ]},
-  { section: 'Marketplace', items: [
-    { to: '/marketplace', icon: '🛒', label: 'Marketplace' },
-    { to: '/cart', icon: '🛍', label: 'My Cart' },
-    { to: '/orders', icon: '📦', label: 'Orders' },
-    { to: '/seller', icon: '🏪', label: 'Seller Dashboard' },
+  FEATURES.marketplace && { section: 'Market', items: [
+    { to: '/marketplace', icon: LuStore, label: 'Marketplace' },
+    { to: '/cart', icon: LuShoppingCart, label: 'Cart' },
+    { to: '/orders', icon: LuPackage, label: 'Orders' },
+    { to: '/seller', icon: LuWarehouse, label: 'My listings' },
   ]},
-]
+].filter(Boolean)
 
-export default function Sidebar() {
+export function BrandMark({ size = 18 }) {
+  return (
+    <span className="brand-mark">
+      <span className="mark"><LuSprout size={size} /></span>
+      AgroTech AI
+    </span>
+  )
+}
+
+export default function Sidebar({ open = false, onNavigate }) {
   const { user, logout } = useAuth()
   const { cartCount } = useCart()
   const navigate = useNavigate()
 
   const handleLogout = () => {
     logout()
-    toast.success('Logged out successfully')
+    toast.success('Signed out')
     navigate('/login')
   }
 
   return (
-    <aside className="sidebar">
-      <div className="sidebar-logo">
-        <span className="sidebar-logo-icon">🌾</span>
-        <div>
-          <div className="sidebar-logo-text">AgriAdvisor</div>
-          <div className="sidebar-logo-sub">AI Platform</div>
-        </div>
-      </div>
+    <aside className={`sidebar${open ? ' open' : ''}`}>
+      <div className="sidebar-logo"><BrandMark /></div>
 
       <nav className="sidebar-nav">
-        {NAV.map(section => (
-          <div key={section.section}>
-            <div className="nav-section-label">{section.section}</div>
-            {section.items.map(item => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}
-              >
-                <span className="nav-icon">{item.icon}</span>
-                <span>{item.label}</span>
-                {item.to === '/cart' && cartCount > 0 && (
-                  <span style={{ marginLeft: 'auto', background: '#4ade80', color: '#000', borderRadius: '12px', padding: '1px 8px', fontSize: '0.7rem', fontWeight: 700 }}>
-                    {cartCount}
-                  </span>
-                )}
+        {NAV.map((group, gi) => (
+          <div key={gi}>
+            {group.section && <div className="nav-section-label">{group.section}</div>}
+            {group.items.map(({ to, icon: Icon, label }) => (
+              <NavLink key={to} to={to} onClick={onNavigate} className={({ isActive }) => `nav-item${isActive ? ' active' : ''}`}>
+                <span className="nav-icon"><Icon size={18} /></span>
+                <span>{label}</span>
+                {to === '/cart' && cartCount > 0 && <span className="nav-count">{cartCount}</span>}
               </NavLink>
             ))}
           </div>
         ))}
       </nav>
 
-      <div className="sidebar-footer">
-        {user && (
-          <div className="user-card" onClick={handleLogout} title="Click to logout">
+      {user && (
+        <div className="sidebar-footer">
+          <div className="user-card">
             <div className="user-avatar">{user.name?.[0]?.toUpperCase()}</div>
-            <div>
+            <div style={{ minWidth: 0 }}>
               <div className="user-name">{user.name}</div>
-              <div className="user-role">🚪 Logout</div>
+              <div className="user-role">{user.location || user.role}</div>
             </div>
+            <button className="btn-ghost btn logout" onClick={handleLogout} title="Sign out" aria-label="Sign out">
+              <LuLogOut size={17} />
+            </button>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </aside>
   )
 }

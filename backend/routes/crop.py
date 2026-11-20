@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required
+from backend.services.activity import log_activity
 import random
 
 crop_bp = Blueprint('crop', __name__)
@@ -96,6 +97,11 @@ def recommend_crops():
             })
 
         results.sort(key=lambda x: x['score'], reverse=True)
+
+        top = ', '.join(f"{r['crop']} ({r['score']})" for r in results[:3])
+        log_activity('crop_recommendation', f'Crop advice for {season} season, {soil} soil, {farm} ha, '
+                     f'{water} water: top picks {top}',
+                     {'rainfall': rain, 'temperature': temp, 'ph': ph, 'season': season})
         return jsonify({'success': True, 'recommendations': results[:8], 'total': len(results)})
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)}), 500

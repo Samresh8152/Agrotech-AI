@@ -1,0 +1,27 @@
+{
+  "sources": [
+    {
+      "name": "plantvillage",
+      "path": "data/raw/PlantVillage-Dataset/raw/color",
+      "role": "lab",
+      "max_per_class": 700
+    },
+    {
+      "name": "plantdoc",
+      "path": "data/raw/PlantDoc-Dataset/train",
+      "role": "field"
+    },
+    {
+      "name": "plantdoc_test",
+      "path": "data/raw/PlantDoc-Dataset/test",
+      "role": "field_test"
+    }
+  ],
+  "mapping": {
+    "Blueberry leaf": null,
+    "Raspberry leaf": null,
+    "Soyabean leaf": null,
+    "Squash Powdery mildew leaf": null
+  },
+  "_note": "Mapped to null: plants with only one class (only healthy, or only one disease). The model would always give that answer for them, so they are left to Gemini."
+}

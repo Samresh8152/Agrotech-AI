@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required
+from backend.services.activity import log_activity
 import joblib
 import numpy as np
 import os
@@ -44,6 +45,10 @@ def predict_yield():
             prediction = _fallback_yield(rainfall, pesticide, temperature)
 
         prediction = max(0, round(prediction))
+
+        log_activity('yield_prediction', f'Yield prediction for {crop}: {round(prediction / 10000, 2)} t/ha '
+                     f'(rainfall {rainfall} mm, temp {temperature}°C, pesticide {pesticide} t)',
+                     {'crop': crop, 'yield_kg_ha': round(prediction / 10)})
 
         return jsonify({
             'success': True,

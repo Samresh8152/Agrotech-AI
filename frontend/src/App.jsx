@@ -1,9 +1,12 @@
+import { useState } from 'react'
 import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
+import { LuMenu } from 'react-icons/lu'
 import { AuthProvider } from './contexts/AuthContext'
 import { CartProvider } from './contexts/CartContext'
 import ProtectedRoute from './components/ProtectedRoute'
-import Sidebar from './components/Sidebar'
+import Sidebar, { BrandMark } from './components/Sidebar'
+import { FEATURES } from './config'
 
 // Pages
 import Login from './pages/Login'
@@ -19,12 +22,19 @@ import Marketplace from './pages/Marketplace'
 import Cart from './pages/Cart'
 import Orders from './pages/Orders'
 import SellerDashboard from './pages/SellerDashboard'
+import Assistant from './pages/Assistant'
 
 function AppLayout() {
+  const [menuOpen, setMenuOpen] = useState(false)
   return (
     <div className="app-layout">
-      <Sidebar />
+      <Sidebar open={menuOpen} onNavigate={() => setMenuOpen(false)} />
+      {menuOpen && <div className="sidebar-scrim" onClick={() => setMenuOpen(false)} />}
       <div className="main-content">
+        <div className="mobile-bar">
+          <button className="btn btn-ghost" onClick={() => setMenuOpen(true)} aria-label="Open menu"><LuMenu size={20} /></button>
+          <BrandMark size={16} />
+        </div>
         <Outlet />
       </div>
     </div>
@@ -40,13 +50,15 @@ export default function App() {
             position="top-right"
             toastOptions={{
               style: {
-                background: '#0d1f0d',
-                color: '#f0fdf4',
-                border: '1px solid rgba(74,222,128,0.25)',
-                borderRadius: '12px',
+                background: '#ffffff',
+                color: '#1c2a20',
+                border: '1px solid #e3dfd2',
+                borderRadius: '8px',
+                fontSize: '0.9rem',
+                boxShadow: '0 4px 16px rgba(28,42,32,0.08)',
               },
-              success: { iconTheme: { primary: '#4ade80', secondary: '#000' } },
-              error: { iconTheme: { primary: '#f87171', secondary: '#000' } },
+              success: { iconTheme: { primary: '#2e6b3f', secondary: '#fff' } },
+              error: { iconTheme: { primary: '#b3261e', secondary: '#fff' } },
             }}
           />
           <Routes>
@@ -58,16 +70,19 @@ export default function App() {
             {/* Protected routes with sidebar layout */}
             <Route element={<ProtectedRoute><AppLayout /></ProtectedRoute>}>
               <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/assistant" element={<Assistant />} />
               <Route path="/disease-prediction" element={<DiseasePrediction />} />
               <Route path="/soil-prediction" element={<SoilPrediction />} />
               <Route path="/weather" element={<WeatherForecast />} />
               <Route path="/crop-recommendation" element={<CropRecommendation />} />
               <Route path="/yield-prediction" element={<YieldPrediction />} />
               <Route path="/fertilizer" element={<FertilizerRecommendation />} />
-              <Route path="/marketplace" element={<Marketplace />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/orders" element={<Orders />} />
-              <Route path="/seller" element={<SellerDashboard />} />
+              {FEATURES.marketplace && <>
+                <Route path="/marketplace" element={<Marketplace />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/orders" element={<Orders />} />
+                <Route path="/seller" element={<SellerDashboard />} />
+              </>}
             </Route>
 
             {/* Fallback */}

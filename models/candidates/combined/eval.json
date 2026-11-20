@@ -1,0 +1,364 @@
+{
+  "summary": {
+    "lab": {
+      "n": 2060,
+      "accuracy": 0.9466,
+      "plant_conditioned_accuracy": 0.9524,
+      "macro_f1": 0.9482
+    },
+    "field": {
+      "n": 572,
+      "accuracy": 0.4843,
+      "plant_conditioned_accuracy": 0.6294,
+      "macro_f1": 0.4504
+    }
+  },
+  "details": {
+    "lab": {
+      "n": 2060,
+      "accuracy": 0.9466,
+      "top3_accuracy": 0.9932,
+      "plant_conditioned_accuracy": 0.9524,
+      "macro_f1": 0.9482,
+      "per_class": {
+        "Apple Black rot": {
+          "n": 62,
+          "accuracy": 1.0
+        },
+        "Apple Cedar apple rust": {
+          "n": 28,
+          "accuracy": 1.0
+        },
+        "Apple healthy": {
+          "n": 70,
+          "accuracy": 1.0
+        },
+        "Apple scab": {
+          "n": 63,
+          "accuracy": 0.9206
+        },
+        "Cherry Powdery mildew": {
+          "n": 70,
+          "accuracy": 0.9857
+        },
+        "Cherry healthy": {
+          "n": 70,
+          "accuracy": 1.0
+        },
+        "Corn Cercospora leaf spot Gray leaf spot": {
+          "n": 51,
+          "accuracy": 0.7451
+        },
+        "Corn Common rust": {
+          "n": 70,
+          "accuracy": 1.0
+        },
+        "Corn Northern Leaf Blight": {
+          "n": 70,
+          "accuracy": 0.9429
+        },
+        "Corn healthy": {
+          "n": 70,
+          "accuracy": 1.0
+        },
+        "Grape Black rot": {
+          "n": 70,
+          "accuracy": 1.0
+        },
+        "Grape Esca": {
+          "n": 70,
+          "accuracy": 0.9
+        },
+        "Grape Leaf blight": {
+          "n": 70,
+          "accuracy": 0.9714
+        },
+        "Grape healthy": {
+          "n": 42,
+          "accuracy": 1.0
+        },
+        "Peach Bacterial spot": {
+          "n": 70,
+          "accuracy": 1.0
+        },
+        "Peach healthy": {
+          "n": 36,
+          "accuracy": 1.0
+        },
+        "Pepper bell Bacterial spot": {
+          "n": 70,
+          "accuracy": 0.9714
+        },
+        "Pepper bell healthy": {
+          "n": 70,
+          "accuracy": 0.9857
+        },
+        "Potato Early blight": {
+          "n": 70,
+          "accuracy": 0.9714
+        },
+        "Potato Late blight": {
+          "n": 70,
+          "accuracy": 0.9429
+        },
+        "Potato healthy": {
+          "n": 15,
+          "accuracy": 0.9333
+        },
+        "Strawberry Leaf scorch": {
+          "n": 70,
+          "accuracy": 0.9857
+        },
+        "Strawberry healthy": {
+          "n": 46,
+          "accuracy": 1.0
+        },
+        "Tomato Bacterial spot": {
+          "n": 70,
+          "accuracy": 0.9
+        },
+        "Tomato Early blight": {
+          "n": 70,
+          "accuracy": 0.7857
+        },
+        "Tomato Late blight": {
+          "n": 70,
+          "accuracy": 0.9143
+        },
+        "Tomato Leaf Mold": {
+          "n": 70,
+          "accuracy": 0.9143
+        },
+        "Tomato Septoria leaf spot": {
+          "n": 70,
+          "accuracy": 0.8286
+        },
+        "Tomato Spider mites": {
+          "n": 70,
+          "accuracy": 0.9143
+        },
+        "Tomato Target Spot": {
+          "n": 70,
+          "accuracy": 0.9
+        },
+        "Tomato Yellow Leaf Curl Virus": {
+          "n": 70,
+          "accuracy": 0.9286
+        },
+        "Tomato healthy": {
+          "n": 70,
+          "accuracy": 0.9714
+        },
+        "Tomato mosaic virus": {
+          "n": 37,
+          "accuracy": 0.973
+        }
+      },
+      "top_confusions": [
+        {
+          "true": "Corn Cercospora leaf spot Gray leaf spot",
+          "predicted": "Corn Northern Leaf Blight",
+          "count": 13
+        },
+        {
+          "true": "Grape Esca",
+          "predicted": "Grape Black rot",
+          "count": 7
+        },
+        {
+          "true": "Tomato Septoria leaf spot",
+          "predicted": "Tomato Target Spot",
+          "count": 7
+        },
+        {
+          "true": "Tomato Early blight",
+          "predicted": "Tomato Target Spot",
+          "count": 6
+        },
+        {
+          "true": "Tomato Spider mites",
+          "predicted": "Tomato Target Spot",
+          "count": 5
+        },
+        {
+          "true": "Apple scab",
+          "predicted": "Apple healthy",
+          "count": 4
+        },
+        {
+          "true": "Corn Northern Leaf Blight",
+          "predicted": "Corn Cercospora leaf spot Gray leaf spot",
+          "count": 3
+        },
+        {
+          "true": "Tomato Early blight",
+          "predicted": "Tomato Septoria leaf spot",
+          "count": 3
+        },
+        {
+          "true": "Tomato Late blight",
+          "predicted": "Potato Late blight",
+          "count": 3
+        },
+        {
+          "true": "Tomato Septoria leaf spot",
+          "predicted": "Tomato Early blight",
+          "count": 3
+        }
+      ]
+    },
+    "field": {
+      "n": 572,
+      "accuracy": 0.4843,
+      "top3_accuracy": 0.7343,
+      "plant_conditioned_accuracy": 0.6294,
+      "macro_f1": 0.4504,
+      "per_class": {
+        "Apple Cedar apple rust": {
+          "n": 26,
+          "accuracy": 0.5769
+        },
+        "Apple healthy": {
+          "n": 25,
+          "accuracy": 0.8
+        },
+        "Apple scab": {
+          "n": 26,
+          "accuracy": 0.4615
+        },
+        "Cherry healthy": {
+          "n": 19,
+          "accuracy": 0.2105
+        },
+        "Corn Cercospora leaf spot Gray leaf spot": {
+          "n": 15,
+          "accuracy": 0.3333
+        },
+        "Corn Common rust": {
+          "n": 31,
+          "accuracy": 0.6452
+        },
+        "Corn Northern Leaf Blight": {
+          "n": 45,
+          "accuracy": 0.7778
+        },
+        "Grape Black rot": {
+          "n": 19,
+          "accuracy": 0.3684
+        },
+        "Grape healthy": {
+          "n": 23,
+          "accuracy": 0.6957
+        },
+        "Peach healthy": {
+          "n": 29,
+          "accuracy": 0.6897
+        },
+        "Pepper bell Bacterial spot": {
+          "n": 21,
+          "accuracy": 0.5238
+        },
+        "Pepper bell healthy": {
+          "n": 19,
+          "accuracy": 0.9474
+        },
+        "Potato Early blight": {
+          "n": 26,
+          "accuracy": 0.2692
+        },
+        "Potato Late blight": {
+          "n": 23,
+          "accuracy": 0.2609
+        },
+        "Strawberry healthy": {
+          "n": 26,
+          "accuracy": 0.9231
+        },
+        "Tomato Bacterial spot": {
+          "n": 28,
+          "accuracy": 0.0714
+        },
+        "Tomato Early blight": {
+          "n": 24,
+          "accuracy": 0.4583
+        },
+        "Tomato Late blight": {
+          "n": 29,
+          "accuracy": 0.3793
+        },
+        "Tomato Leaf Mold": {
+          "n": 23,
+          "accuracy": 0.3913
+        },
+        "Tomato Septoria leaf spot": {
+          "n": 38,
+          "accuracy": 0.3421
+        },
+        "Tomato Yellow Leaf Curl Virus": {
+          "n": 19,
+          "accuracy": 0.3158
+        },
+        "Tomato healthy": {
+          "n": 19,
+          "accuracy": 0.2105
+        },
+        "Tomato mosaic virus": {
+          "n": 19,
+          "accuracy": 0.0526
+        }
+      },
+      "top_confusions": [
+        {
+          "true": "Cherry healthy",
+          "predicted": "Apple healthy",
+          "count": 9
+        },
+        {
+          "true": "Corn Northern Leaf Blight",
+          "predicted": "Corn Cercospora leaf spot Gray leaf spot",
+          "count": 9
+        },
+        {
+          "true": "Potato Early blight",
+          "predicted": "Potato Late blight",
+          "count": 8
+        },
+        {
+          "true": "Corn Common rust",
+          "predicted": "Corn Northern Leaf Blight",
+          "count": 7
+        },
+        {
+          "true": "Potato Late blight",
+          "predicted": "Tomato Late blight",
+          "count": 7
+        },
+        {
+          "true": "Tomato Bacterial spot",
+          "predicted": "Pepper bell Bacterial spot",
+          "count": 7
+        },
+        {
+          "true": "Corn Cercospora leaf spot Gray leaf spot",
+          "predicted": "Corn Northern Leaf Blight",
+          "count": 6
+        },
+        {
+          "true": "Tomato healthy",
+          "predicted": "Pepper bell healthy",
+          "count": 6
+        },
+        {
+          "true": "Apple scab",
+          "predicted": "Apple Cedar apple rust",
+          "count": 5
+        },
+        {
+          "true": "Potato Late blight",
+          "predicted": "Potato Early blight",
+          "count": 5
+        }
+      ]
+    }
+  }
+}

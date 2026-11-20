@@ -141,3 +141,43 @@ Refer to the `app.py` file for the exact request payload and response structure 
 ## Contributing
 
 Contributions are welcome! If you have suggestions for improvements, bug fixes, or new features, please feel free to open an issue or submit a pull request. 
+## Plant Disease Detection (any plant)
+
+The disease page asks for the plant name, then combines two engines:
+
+1. **Gemini AI vision**: diagnoses any plant. It returns the disease, pathogen type, severity, symptoms, organic and chemical treatment, and prevention, and it warns when the photo doesn't match the plant name you entered.
+2. **Local CNN** (`models/leaf_disease_model.*`): works offline. When you give a plant name, only that plant's classes are considered.
+
+How the two are combined:
+
+- **Plants the CNN knows** (Tomato, Potato, Apple...): both models judge the image independently. Gemini maps its diagnosis to one of the CNN's classes, and a weighted vote (Gemini 60%, CNN 40%) picks the final answer. The page shows both opinions and whether they agree. If Gemini finds something outside the CNN's classes, such as a nutrient deficiency or pest, Gemini's answer is used.
+- **Any other plant**: Gemini alone.
+- **Gemini unavailable**: the CNN alone, for the crops it knows.
+
+## AI Assistant (Krishi Mitra)
+
+The `/assistant` page is a Gemini chat assistant that knows each farmer personally. Every reply uses:
+
+- the farmer's profile (name, location)
+- facts it has learned from earlier chats, like crops, farm size and irrigation; the farmer can view, add or delete them
+- recent activity in the app: disease scans, soil tests, crop advice, fertilizer plans and yield predictions, which are logged automatically
+- the last 20 chat messages
+
+It replies in the language the farmer writes in (English, Hindi or Hinglish). After a disease scan, "Ask AI Assistant" opens a personalised treatment plan.
+
+Setup: add a key from https://aistudio.google.com/apikey to `.env`:
+
+```
+GEMINI_API_KEY=your-key
+GEMINI_MODEL=gemini-3.5-flash
+```
+
+### Retraining the local model for more plants
+
+`training/train_leaf_disease.py` trains an EfficientNetV2 model on any folders named `Plant___Disease`. You can merge several datasets, such as PlantVillage, PlantDoc, and rice, wheat or cotton sets:
+
+```bash
+python training/train_leaf_disease.py --data-dirs data/plantvillage/train data/rice/train --val-dirs data/plantvillage/valid
+```
+
+It writes `models/leaf_disease_model.keras` and `models/leaf_disease_labels.json`. The API uses them automatically instead of the old 33-class model.

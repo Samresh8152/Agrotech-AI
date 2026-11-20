@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required
+from backend.services.activity import log_activity
 import random
 
 fertilizer_bp = Blueprint('fertilizer', __name__)
@@ -59,6 +60,9 @@ def recommend_fertilizer():
         n = max(10, round(base['N'] * rf[0] * soil_adj[0] * stage_adj[0] * random.uniform(0.9, 1.1)))
         p = max(5, round(base['P'] * rf[1] * soil_adj[1] * stage_adj[1] * random.uniform(0.9, 1.1)))
         k = max(5, round(base['K'] * rf[2] * soil_adj[2] * stage_adj[2] * random.uniform(0.9, 1.1)))
+
+        log_activity('fertilizer', f'Fertilizer plan for {matched} ({growth_stage}, {soil_type} soil, {field_size} ha): '
+                     f'N {n}, P {p}, K {k} kg/ha', {'crop': matched, 'rainfall': rainfall})
 
         return jsonify({
             'success': True,

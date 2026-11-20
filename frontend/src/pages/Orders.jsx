@@ -22,7 +22,7 @@ export default function Orders() {
 
   const tabStyle = (t) => ({
     padding:'10px 20px',border:'none',borderRadius:'8px',cursor:'pointer',fontWeight:600,fontSize:'0.875rem',
-    background:tab===t?'linear-gradient(135deg,#16a34a,#15803d)':'transparent',
+    background:tab===t?'var(--brand)':'transparent',
     color:tab===t?'#fff':'var(--text-muted)',transition:'all 0.2s'
   })
 
@@ -31,7 +31,6 @@ export default function Orders() {
   return (
     <div className="page-container fade-in">
       <div className="page-header">
-        <div className="page-icon">📦</div>
         <div>
           <h1 className="page-title">Orders & Transactions</h1>
           <p className="page-subtitle">Track your purchases and payment history</p>
@@ -41,10 +40,10 @@ export default function Orders() {
       {/* Stats */}
       <div className="stats-grid" style={{marginBottom:'24px'}}>
         {[
-          {icon:'📦',val:orders.length,label:'Total Orders'},
-          {icon:'✅',val:orders.filter(o=>o.status==='paid').length,label:'Paid'},
-          {icon:'⏳',val:orders.filter(o=>o.status==='pending').length,label:'Pending'},
-          {icon:'💰',val:`₹${orders.reduce((s,o)=>s+o.total_amount,0).toLocaleString()}`,label:'Total Spent'},
+          {icon:'',val:orders.length,label:'Total Orders'},
+          {icon:'',val:orders.filter(o=>o.status==='paid').length,label:'Paid'},
+          {icon:'',val:orders.filter(o=>o.status==='pending').length,label:'Pending'},
+          {icon:'',val:`₹${orders.reduce((s,o)=>s+o.total_amount,0).toLocaleString()}`,label:'Total Spent'},
         ].map(s=>(
           <div key={s.label} className="glass-card stat-card">
             <div className="stat-icon">{s.icon}</div>
@@ -56,14 +55,14 @@ export default function Orders() {
 
       {/* Tabs */}
       <div style={{display:'flex',gap:'4px',marginBottom:'20px',background:'var(--bg-secondary)',padding:'6px',borderRadius:'12px',width:'fit-content'}}>
-        <button style={tabStyle('orders')} onClick={()=>setTab('orders')}>📦 Orders ({orders.length})</button>
-        <button style={tabStyle('transactions')} onClick={()=>setTab('transactions')}>💳 Transactions ({transactions.length})</button>
+        <button style={tabStyle('orders')} onClick={()=>setTab('orders')}>Orders ({orders.length})</button>
+        <button style={tabStyle('transactions')} onClick={()=>setTab('transactions')}>Transactions ({transactions.length})</button>
       </div>
 
       {tab === 'orders' && (
         orders.length === 0 ? (
           <div className="glass-card" style={{padding:'64px',textAlign:'center',color:'var(--text-muted)'}}>
-            <div style={{fontSize:'3.5rem',marginBottom:'16px'}}>📦</div>
+            
             <p>No orders yet. <a href="/marketplace" style={{color:'var(--accent-green)'}}>Browse marketplace →</a></p>
           </div>
         ) : (
@@ -72,28 +71,28 @@ export default function Orders() {
               <div key={order.id} className="glass-card" style={{padding:'24px'}}>
                 <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:'16px',flexWrap:'wrap',gap:'8px'}}>
                   <div>
-                    <h3 style={{fontFamily:'Poppins',fontWeight:700}}>Order #{order.id}</h3>
+                    <h3 style={{fontFamily:'var(--font-display)',fontWeight:700}}>Order #{order.id}</h3>
                     <p style={{fontSize:'0.8rem',color:'var(--text-muted)',marginTop:'2px'}}>{new Date(order.created_at).toLocaleString()}</p>
                   </div>
                   <div style={{display:'flex',gap:'8px',alignItems:'center'}}>
                     <span className={`badge ${statusColor[order.status]||'badge-info'}`}>{order.status.toUpperCase()}</span>
-                    <span style={{fontFamily:'Poppins',fontWeight:800,fontSize:'1.2rem',color:'var(--accent-green)'}}>₹{order.total_amount.toLocaleString()}</span>
+                    <span style={{fontFamily:'var(--font-display)',fontWeight:600,fontSize:'1.2rem',color:'var(--accent-green)'}}>₹{order.total_amount.toLocaleString()}</span>
                   </div>
                 </div>
                 <div style={{display:'flex',flexDirection:'column',gap:'8px'}}>
                   {order.items?.map(item=>(
-                    <div key={item.id} style={{display:'flex',justifyContent:'space-between',padding:'10px 14px',background:'rgba(0,0,0,0.2)',borderRadius:'8px',fontSize:'0.85rem'}}>
+                    <div key={item.id} style={{display:'flex',justifyContent:'space-between',padding:'10px 14px',background:'var(--surface-2)',borderRadius:'8px',fontSize:'0.85rem'}}>
                       <span style={{color:'var(--text-secondary)'}}>{item.product_title} × {item.quantity}</span>
                       <span style={{color:'var(--accent-green)',fontWeight:600}}>₹{item.subtotal?.toLocaleString()}</span>
                     </div>
                   ))}
                 </div>
                 {order.delivery_address && (
-                  <p style={{fontSize:'0.8rem',color:'var(--text-muted)',marginTop:'12px'}}>📍 {order.delivery_address}</p>
+                  <p style={{fontSize:'0.8rem',color:'var(--text-muted)',marginTop:'12px'}}>{order.delivery_address}</p>
                 )}
                 {order.transaction && (
-                  <div style={{marginTop:'12px',padding:'10px',background:'rgba(74,222,128,0.06)',borderRadius:'8px',border:'1px solid var(--border)',fontSize:'0.78rem',color:'var(--text-muted)'}}>
-                    💳 Payment ID: <span style={{color:'var(--accent-green)',fontFamily:'monospace'}}>{order.transaction.razorpay_payment_id || 'N/A'}</span>
+                  <div style={{marginTop:'12px',padding:'10px',background:'var(--brand-tint)',borderRadius:'8px',border:'1px solid var(--border)',fontSize:'0.78rem',color:'var(--text-muted)'}}>
+                    Payment ID: <span style={{color:'var(--accent-green)',fontFamily:'monospace'}}>{order.transaction.razorpay_payment_id || 'N/A'}</span>
                   </div>
                 )}
               </div>
